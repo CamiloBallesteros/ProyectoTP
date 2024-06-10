@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ProyectoTP.Models.Tables
+namespace ProyectoTP.DataLayer.Tables
 {
     public class RegistroLlamada
     {

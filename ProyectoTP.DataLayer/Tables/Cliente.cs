@@ -2,13 +2,14 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ProyectoTP.Models.Tables
+namespace ProyectoTP.DataLayer.Tables
 {
     public class Cliente
     {
         [DisplayName("Tipo Doc.")]
+        [MaxLength(10)]
         [Required]
-        public int TipoDocumento { get; set; }
+        public string TipoDocumento { get; set; }
 
         [DisplayName("Num. Documento")]
         [Required]
@@ -28,19 +29,6 @@ namespace ProyectoTP.Models.Tables
         [DataType(DataType.DateTime)]
         [Required]
         public DateTime FechaNacimiento { get;set; }
-
-        [NotMapped]
-        public int? Edad 
-        { 
-            get 
-            {
-                int edad = DateTime.Today.Year - FechaNacimiento.Year;
-                if (DateTime.Now.DayOfYear < FechaNacimiento.DayOfYear)
-                    edad -= 1;
-
-                return edad; 
-            }
-        }
 
         [Required]
         public int CiudadId { get; set; }

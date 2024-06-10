@@ -4,7 +4,26 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div>
+</div>
+<div id="tableRegClientes">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre Completo</th>
+                <th>Ciudad</th>
+                <th>Edad</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cliente in Model.listaClientes)
+            {
+                <tr data-id="@cliente.NumeroDocumento">
+                    <td>@Html.DisplayFor(modelItem => cliente.NombreCompleto)</td>
+                    <td>@Html.DisplayFor(modelItem => cliente.NombreCiudad)</td>
+                    <td>@Html.DisplayFor(modelItem => cliente.Edad)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>

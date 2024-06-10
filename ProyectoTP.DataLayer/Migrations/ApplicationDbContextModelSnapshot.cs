@@ -22,7 +22,7 @@ namespace ProyectoTP.DataLayer.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ProyectoTP.Models.Tables.Ciudad", b =>
+            modelBuilder.Entity("ProyectoTP.DataLayer.Tables.Ciudad", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -32,7 +32,8 @@ namespace ProyectoTP.DataLayer.Migrations
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
 
@@ -42,7 +43,7 @@ namespace ProyectoTP.DataLayer.Migrations
                     b.ToTable("Ciudades");
                 });
 
-            modelBuilder.Entity("ProyectoTP.Models.Tables.Cliente", b =>
+            modelBuilder.Entity("ProyectoTP.DataLayer.Tables.Cliente", b =>
                 {
                     b.Property<int>("NumeroDocumento")
                         .ValueGeneratedOnAdd()
@@ -64,8 +65,10 @@ namespace ProyectoTP.DataLayer.Migrations
                     b.Property<string>("NumeroCelular")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TipoDocumento")
-                        .HasColumnType("int");
+                    b.Property<string>("TipoDocumento")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.HasKey("NumeroDocumento");
 
@@ -74,7 +77,7 @@ namespace ProyectoTP.DataLayer.Migrations
                     b.ToTable("Clientes");
                 });
 
-            modelBuilder.Entity("ProyectoTP.Models.Tables.RegistroLlamada", b =>
+            modelBuilder.Entity("ProyectoTP.DataLayer.Tables.RegistroLlamada", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -100,9 +103,9 @@ namespace ProyectoTP.DataLayer.Migrations
                     b.ToTable("RegistroLlamadas");
                 });
 
-            modelBuilder.Entity("ProyectoTP.Models.Tables.Cliente", b =>
+            modelBuilder.Entity("ProyectoTP.DataLayer.Tables.Cliente", b =>
                 {
-                    b.HasOne("ProyectoTP.Models.Tables.Ciudad", "Ciudad")
+                    b.HasOne("ProyectoTP.DataLayer.Tables.Ciudad", "Ciudad")
                         .WithMany("Clientes")
                         .HasForeignKey("CiudadId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -111,9 +114,9 @@ namespace ProyectoTP.DataLayer.Migrations
                     b.Navigation("Ciudad");
                 });
 
-            modelBuilder.Entity("ProyectoTP.Models.Tables.RegistroLlamada", b =>
+            modelBuilder.Entity("ProyectoTP.DataLayer.Tables.RegistroLlamada", b =>
                 {
-                    b.HasOne("ProyectoTP.Models.Tables.Cliente", "Cliente")
+                    b.HasOne("ProyectoTP.DataLayer.Tables.Cliente", "Cliente")
                         .WithMany("Llamadas")
                         .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -122,12 +125,12 @@ namespace ProyectoTP.DataLayer.Migrations
                     b.Navigation("Cliente");
                 });
 
-            modelBuilder.Entity("ProyectoTP.Models.Tables.Ciudad", b =>
+            modelBuilder.Entity("ProyectoTP.DataLayer.Tables.Ciudad", b =>
                 {
                     b.Navigation("Clientes");
                 });
 
-            modelBuilder.Entity("ProyectoTP.Models.Tables.Cliente", b =>
+            modelBuilder.Entity("ProyectoTP.DataLayer.Tables.Cliente", b =>
                 {
                     b.Navigation("Llamadas");
                 });

@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using ProyectoTP.BusinessLayer.Interfaces;
+using ProyectoTP.BusinessLayer.Service;
 using ProyectoTP.DataLayer.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +11,8 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ProyectoTPConnection"))
 );
+builder.Services.AddScoped<IClientService, ClientService>();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

@@ -17,7 +17,7 @@ namespace ProyectoTP.DataLayer.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Nombre = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -28,9 +28,8 @@ namespace ProyectoTP.DataLayer.Migrations
                 name: "Clientes",
                 columns: table => new
                 {
-                    NumeroDocumento = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TipoDocumento = table.Column<int>(type: "int", nullable: false),
+                    NumeroDocumento = table.Column<int>(type: "int", nullable: false),
+                    TipoDocumento = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     NombreCompleto = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     NumeroCelular = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FechaNacimiento = table.Column<DateTime>(type: "datetime", nullable: false),
@@ -67,6 +66,12 @@ namespace ProyectoTP.DataLayer.Migrations
                         principalColumn: "NumeroDocumento",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ciudades_Nombre",
+                table: "Ciudades",
+                column: "Nombre",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Clientes_CiudadId",
