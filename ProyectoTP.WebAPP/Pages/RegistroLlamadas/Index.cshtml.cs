@@ -47,9 +47,9 @@ namespace ProyectoTP.WebAPP.Pages.RegistroLlamadas
             ListaLlamadas = _clientService.GetClientListFiltered(NumDocumento, NombreCiudad,startdate, enddate);
             if (ListaLlamadas.Count > 0)
             {
-                PromedioEdad = (int)Math.Round(ListaLlamadas.Average(x => x.Edad)!.Value);
-                ClientesMenor_20 = ListaLlamadas.Count(x => x.Edad < 20);
-                ClientesMayor_50 = ListaLlamadas.Count(x => x.Edad > 50);
+                PromedioEdad = (int)Math.Round(ListaLlamadas.Select(x => new { x.NumeroDocumento ,x.Edad}).Distinct().Average(x => x.Edad)!.Value);
+                ClientesMenor_20 = ListaLlamadas.Select(x => new { x.NumeroDocumento, x.Edad }).Distinct().Count(x => x.Edad < 20);
+                ClientesMayor_50 = ListaLlamadas.Select(x => new { x.NumeroDocumento, x.Edad }).Distinct().Count(x => x.Edad > 50);
             }
             return Page();
         }
