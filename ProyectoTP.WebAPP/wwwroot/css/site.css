@@ -100,9 +100,6 @@ a.btn, button.btn, a.btn:active, button.btn:active {
 
 
 /* Fix CSS Bootstrap Styles*/
-.datepicker-label {
-    top: -26px !important;
-}
 
 .modal.datepicker-modal {
     height: unset !important;

@@ -24,9 +24,9 @@ namespace ProyectoTP.WebAPP.Pages.RegistroLlamadas
         [FromQuery]
         public string NombreCiudad { get; set; } = "";
         [FromQuery]
-        public DateTime? StartDate { get; set; } = null;
+        public string? StartDateString { get; set; } = null;
         [FromQuery]
-        public DateTime? EndDate { get; set; } = null;
+        public string? EndDateString { get; set; } = null;
         public int PromedioEdad { get; set; } = 0;
         public int ClientesMenor_20 { get; set; } = 0;
         public int ClientesMayor_50 { get; set; } = 0;
@@ -37,7 +37,14 @@ namespace ProyectoTP.WebAPP.Pages.RegistroLlamadas
         public IActionResult OnGet()
         {
             ListaCiudades = new SelectList(_ciudadService.GetCiudadesList());
-            ListaLlamadas = _clientService.GetClientListFiltered(NumDocumento, NombreCiudad, StartDate, EndDate);
+            DateTime? startdate;
+            DateTime? enddate;
+            _ = DateTime.TryParse(StartDateString, out DateTime start);
+            _ = DateTime.TryParse(EndDateString, out DateTime end);
+            startdate = start < new DateTime(2000, 1, 1) ? null : start;
+            enddate = end < new DateTime(2000, 1, 1) ? null : end;
+
+            ListaLlamadas = _clientService.GetClientListFiltered(NumDocumento, NombreCiudad,startdate, enddate);
             if (ListaLlamadas.Count > 0)
             {
                 PromedioEdad = (int)Math.Round(ListaLlamadas.Average(x => x.Edad)!.Value);

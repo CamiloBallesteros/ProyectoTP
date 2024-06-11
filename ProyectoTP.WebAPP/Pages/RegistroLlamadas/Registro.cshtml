@@ -6,129 +6,151 @@
 
 <div class="container-fluid mt-4">
     <input type="hidden" asp-for="IsCliente" />
-    <div class="row pt-2 mb-1">
-        <h4>Registrar Nueva Llamada</h4>
-    </div>
-    <form method="get" id="searchClient">
-        <div class="row">
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="input-field col s12 m6">
-                    <select asp-for="TipoDocumento" asp-items="Models.Dropdowns.TipoDocSelect">
-                        <option value="" selected>Seleccione...</option>
-                    </select>
-                    <label asp-for="TipoDocumento">Tipo Documento:</label>
-                </div>
-                <div class="input-field col s12 m6">
-                    <input asp-for="NumDocumento" placeholder="Buscar" value="" />
-                    <label asp-for="NumDocumento">Numero Documento:</label>
-                </div>
-                <button class="btn waves-effect waves-light">
-                    <i class="material-icons right m-0">search</i>
-                </button>
-            </div>
-        </div>
-    </form>
 
-    <form method="post" asp-page-handler="@(Model.IsCliente ? "UpdClient" : "CreateClient")" id="saveClientData">
-        <div class="row">
-            <h4>Datos del cliente</h4>
-            <div class="row">
-                <div class="input-field col s12 m6">
-                    @if (Model.IsCliente)
-                    {
-                        <input asp-for="Cliente.NumeroDocumento" type="hidden" />
-                    }
-                    <input asp-for="Cliente.NumeroDocumento" class="disable_ifClient" />
-                    <label asp-for="Cliente.NumeroDocumento">Numero Documento:</label>
-                </div>
-                <div class="input-field col s12 m6 select_disable_ifClient">
-                    <select asp-for="Cliente.TipoDocumento" asp-items="Models.Dropdowns.TipoDocSelect">
-                        <option value="">Seleccione...</option>
-                    </select>
-                    <label asp-for="Cliente.TipoDocumento">Tipo Documento:</label>
+    <ul class="collapsible" id="collapsibleItem">
+        <li class="active step1">
+            <div class="collapsible-header">
+                <div class="row mb-1 col">
+                    <h4 class="m-0">Registrar Nueva Llamada</h4>
                 </div>
             </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    <input asp-for="Cliente.NombreCompleto" class="disable_ifClient counter" data-length="100" />
-                    <label asp-for="Cliente.NombreCompleto">Nombre Completo:</label>
+            <div class="collapsible-body">
+                <form method="get" id="searchClient">
+                    <div class="row">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="input-field col s12 m6">
+                                <select asp-for="TipoDocumento" asp-items="Models.Dropdowns.TipoDocSelect">
+                                    <option value="" selected>Seleccione...</option>
+                                </select>
+                                <label asp-for="TipoDocumento">Tipo Documento:</label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <input asp-for="NumDocumento" placeholder="Buscar" value="" />
+                                <label asp-for="NumDocumento">Numero Documento:</label>
+                            </div>
+                            <button class="btn waves-effect waves-light">
+                                <i class="material-icons right m-0">search</i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </li>
+        <li class="step2">
+            <div class="collapsible-header">
+                <div class="row mb-1 col">
+                    <h4 class="m-0">Datos del cliente</h4>
                 </div>
             </div>
-            <div class="row">
-                <div class="input-field col s12 m4">
-                    <select asp-for="Cliente.NombreCiudad" asp-items="Model.ListaCiudades">
-                        <option value="">Seleccione...</option>
-                    </select>
-                    <label asp-for="Cliente.NombreCiudad">Ciudad:</label>
-                </div>
-                <div class="input-field col s12 m4">
-                    <input asp-for="Cliente.NumeroCelular" />
-                    <label asp-for="Cliente.NumeroCelular">Numero de celular:</label>
-                </div>
-                <div class="input-field col s12 m4">
-                    <input asp-for="Cliente.FechaNacimiento" class="disable_ifClient browser-default">
-                    <label for="Cliente_FechaNacimiento" class="datepicker-label">Fecha de nacimiento:</label>
-                </div>
-            </div>
+            <div class="collapsible-body">
+                <form method="post" asp-page-handler="@(Model.IsCliente ? "UpdClient" : "CreateClient")" id="saveClientData">
+                    <div class="row">
+                        @* <h4>Datos del cliente</h4> *@
+                        <div class="row">
+                            <div class="input-field col s12 m6">
+                                @if (Model.IsCliente)
+                                {
+                                    <input asp-for="Cliente.NumeroDocumento" type="hidden" />
+                                }
+                                <input asp-for="Cliente.NumeroDocumento" class="disable_ifClient" />
+                                <label asp-for="Cliente.NumeroDocumento">Numero Documento:</label>
+                            </div>
+                            <div class="input-field col s12 m6 select_disable_ifClient">
+                                <select asp-for="Cliente.TipoDocumento" asp-items="Models.Dropdowns.TipoDocSelect">
+                                    <option value="">Seleccione...</option>
+                                </select>
+                                <label asp-for="Cliente.TipoDocumento">Tipo Documento:</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input asp-for="Cliente.NombreCompleto" class="disable_ifClient counter" data-length="100" />
+                                <label asp-for="Cliente.NombreCompleto">Nombre Completo:</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12 m4">
+                                <select asp-for="Cliente.NombreCiudad" asp-items="Model.ListaCiudades">
+                                    <option value="">Seleccione...</option>
+                                </select>
+                                <label asp-for="Cliente.NombreCiudad">Ciudad:</label>
+                            </div>
+                            <div class="input-field col s12 m4">
+                                <input asp-for="Cliente.NumeroCelular" />
+                                <label asp-for="Cliente.NumeroCelular">Numero de celular:</label>
+                            </div>
+                            <div class="input-field col s12 m4">
+                                <input asp-for="Cliente.FechaNacimientoString" class="datepicker disable_ifClient">
+                                <label for="Cliente_FechaNacimientoString" class="datepicker-label">Fecha de nacimiento:</label>
+                            </div>
+                        </div>
 
-            <div class="row">
-                <div class="input-field col s6 m3">
-                    <button class="btn waves-effect waves-light" id="btnSaveClient">
-                        Guardar / Continuar
-                        <i class="material-icons right">send</i>
-                    </button>
-                </div>
-                <div class="input-field col s6 m3">
-                    <button class="btn waves-effect waves-light" onclick="limpiarCampos();">
-                        Limpiar Datos
-                        <i class="material-icons right"></i>
-                    </button>
+                        <div class="row">
+                            <div class="input-field col s6 m3">
+                                <button class="btn waves-effect waves-light" id="btnSaveClient">
+                                    Guardar / Continuar
+                                    <i class="material-icons right">send</i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </li>
+        <li class="step3">
+            <div class="collapsible-header">
+                <div class="row mb-1 col">
+                    <h4 class="m-0">Datos de la llamada</h4>
                 </div>
             </div>
-        </div>
-    </form>
+            <div class="collapsible-body">
+                <form method="post" asp-page-handler="RegistrarLlamada" id="saveRegCall">
+                    <input type="hidden" asp-for="RegCall.ClienteId" />
+                    <div class="row">
+                        
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <select asp-for="RegCall.TipoSolicitud" asp-items="Models.Dropdowns.TipoSolicitud">
+                                    <option value="">Seleccione...</option>
+                                </select>
+                                <label for="RegCall_TipoSolicitud">Tipo Solicitud</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <textarea asp-for="RegCall.Razon" class="materialize-textarea counter" data-length="1000"></textarea>
+                                <label for="textarea1">Razón</label>
+                            </div>
+                        </div>
 
-    <form method="post" asp-page-handler="RegistrarLlamada" id="saveRegCall">
-        <input type="hidden" asp-for="RegCall.ClienteId" />
-        <div class="row">
-            <h4>Datos de la llamada</h4>
-            <div class="row">
-                <div class="input-field col s12">
-                    <select asp-for="RegCall.TipoSolicitud" asp-items="Models.Dropdowns.TipoSolicitud">
-                        <option value="">Seleccione...</option>
-                    </select>
-                    <label for="RegCall_TipoSolicitud">Tipo Solicitud</label>
-                </div>
+                        <div class="row">
+                            <div class="input-field col s6 m3">
+                                <button class="btn waves-effect waves-light" id="btnSaveCall">
+                                    Guardar
+                                    <i class="material-icons right">send</i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    <textarea asp-for="RegCall.Razon" class="materialize-textarea counter" data-length="1000"></textarea>
-                    <label for="textarea1">Razón</label>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="input-field col s6 m3">
-                    <button class="btn waves-effect waves-light" id="btnSaveCall">
-                        Guardar
-                        <i class="material-icons right">send</i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </form>
+        </li>
+    </ul>
 </div>
 
 @section Scripts {
     <script>
         $(function () {
             $(".datepicker").datepicker({
-                defaultDate: new Date(),
-                // setDefaultDate: new Date(2000,01,31),
-                maxDate: new Date(),
-                yearRange: [1928, new Date()]
+                defaultDate: new Date(2000,01,31),
+                minDate: new Date(1950,1,1),
+                maxDate: new Date(2014,12,31),
+                yearRange: [1950,2014],
+                showClearBtn: true,
+                format: "dd/mm/yyyy"
             });
             $('select').formSelect();
+            $('.collapsible').collapsible();
             $('input.counter, textarea.counter').characterCounter();
 
             if ($("#IsCliente").val() == 'True') {
@@ -138,6 +160,10 @@
                 $(".select_disable_ifClient .select-dropdown").css('border-bottom', '1px dotted rgba(0, 0, 0, 0.42)');
                 $(".select_disable_ifClient .select-dropdown").css('pointer-events', 'none')
                 $(".select_disable_ifClient ul li").css('display', 'none');
+                collapsibleChange('step1', 'step2');
+            } else if ($("input#Cliente_NumeroDocumento").val() > 0) 
+            {
+                collapsibleChange('step1', 'step2');
             }
 
             $("button#btnSaveClient").click(function (e) {
@@ -157,6 +183,7 @@
                         if (data.ok == true) {
                             $("input#RegCall_ClienteId").val(data.numDocChanged);
                             alert(data.mensaje);
+                            collapsibleChange('step2','step3');
                         }
                         ajaxInvoke = false;
                     })
@@ -200,5 +227,12 @@
                     });
             });
         });
+
+        function collapsibleChange(from,to){
+            $(".collapsible li." + from + " .collapsible-body").css("display", 'none');
+            $(".collapsible li." + from).removeClass("active");
+            $(".collapsible li." + to).addClass("active");
+            $(".collapsible li." + to + " .collapsible-body").css("display", 'block');
+        }
     </script>
 }

@@ -15,7 +15,22 @@ namespace ProyectoTP.Models.ViewModels
         public int NumeroDocumento { get; set; }
         public string NombreCompleto { get; set; }
         public string? NumeroCelular { get; set; }
-        public DateTime FechaNacimiento { get; set; } = new DateTime(1974, 1, 1);
+        public string? FechaNacimientoString { get; set; }
+        
+        public DateTime FechaNacimiento
+        {
+            get
+            {
+                if(DateTime.TryParse(FechaNacimientoString, out DateTime fechaNac))
+                {
+                    return fechaNac;
+                }
+                else
+                {
+                    return new DateTime();
+                }
+            }
+        }
         public int? Edad
         {
             get

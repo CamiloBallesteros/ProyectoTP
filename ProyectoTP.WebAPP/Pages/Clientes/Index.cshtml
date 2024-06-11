@@ -68,12 +68,6 @@
                         <i class="material-icons right">send</i>
                     </button>
                 </div>
-                <div class="input-field col s6 m3">
-                    <button class="btn waves-effect waves-light" type="button" onclick="limpiarCampos();">
-                        Limpiar Datos
-                        <i class="material-icons right"></i>
-                    </button>
-                </div>
             </div>
         </div>
     </form>
@@ -135,8 +129,7 @@
         });
 
         function limpiarCampos(){
-            $('#saveClientData').attr('action', '/Clientes?handler=CreateClient');
-
+            window.location.href = '@Url.Page("/Clientes/Index")';
         }
     </script>
 }

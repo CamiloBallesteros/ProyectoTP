@@ -43,8 +43,13 @@ namespace ProyectoTP.WebAPP.Pages.RegistroLlamadas
             if (NumDocumento > 0 && TipoDocumento != "")
             {
                 Cliente = _clientService.GetClientByTypeAndDoc(TipoDocumento, NumDocumento);
-                if(Cliente.NumeroDocumento > 0)
+                if (Cliente.NumeroDocumento > 0)
                     IsCliente = true;
+                else
+                {
+                    Cliente.NumeroDocumento = NumDocumento;
+                    Cliente.TipoDocumento = TipoDocumento;
+                }
 
             }
             return Page();

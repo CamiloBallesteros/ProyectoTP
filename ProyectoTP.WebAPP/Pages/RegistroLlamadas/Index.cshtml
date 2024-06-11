@@ -27,12 +27,12 @@
             </div>
             <div class="row col s11 m6">
                 <div class="input-field col s6 m3">
-                    <input asp-for="StartDate" class="browser-default">
-                    <label for="StartDate" class="datepicker-label">Fecha Inicio:</label>
+                    <input asp-for="StartDateString" class="datepicker">
+                    <label for="StartDateString" class="datepicker-label">Fecha Inicio:</label>
                 </div>
                 <div class="input-field col s6 m3">
-                    <input asp-for="EndDate" class="browser-default">
-                    <label for="StartDate" class="datepicker-label">Fecha Fin</label>
+                    <input asp-for="EndDateString" class="datepicker">
+                    <label for="EndDateString" class="datepicker-label">Fecha Fin</label>
                 </div>
             </div>
             <div class="input-field col s1">
@@ -68,6 +68,14 @@
 @section Scripts {
     <script>
         $(function () {
+            $(".datepicker").datepicker({
+                defaultDate: new Date(2000,1,1),
+                minDate: new Date(2000,1,1),
+                maxDate: new Date(),
+                yearRange: 24,
+                showClearBtn: true,
+                format: "dd/mm/yyyy"
+            });
             $('select').formSelect();
 
             $(".autosubmit").change(function () {
