@@ -1,29 +1,9 @@
 ﻿@page
-@model IndexModel
+@model ProyectoTP.WebAPP.Pages.IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Sistema de Gestion de Llamadas CallCenter";
 }
 
-<div>
-</div>
-<div id="tableRegClientes">
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Nombre Completo</th>
-                <th>Ciudad</th>
-                <th>Edad</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var cliente in Model.listaClientes)
-            {
-                <tr data-id="@cliente.NumeroDocumento">
-                    <td>@Html.DisplayFor(modelItem => cliente.NombreCompleto)</td>
-                    <td>@Html.DisplayFor(modelItem => cliente.NombreCiudad)</td>
-                    <td>@Html.DisplayFor(modelItem => cliente.Edad)</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+<div class="container row mt-5">
+    <h2 class="text-center">Sistema de Gestion de Llamadas CallCenter</h2>
 </div>

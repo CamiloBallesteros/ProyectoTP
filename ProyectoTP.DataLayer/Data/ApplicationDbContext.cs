@@ -19,7 +19,7 @@ namespace ProyectoTP.DataLayer.Data
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<RegistroLlamada> RegistroLlamadas { get; set; }
 
-        public int PAddClient(AddClientModel newClient)
+        public void PAddClient(AddClientModel newClient)
         {
             var tipoDocParam = new SqlParameter("@TipoDoc", (object)newClient.TipoDocumento ?? DBNull.Value);
             var numDocParam = new SqlParameter("@NumeroDoc", (object)newClient.NumeroDocumento ?? DBNull.Value);
@@ -28,18 +28,18 @@ namespace ProyectoTP.DataLayer.Data
             var fechaNacimientoParam = new SqlParameter("@FechaNacimiento", (object)newClient.FechaNacimiento ?? DBNull.Value);
             var numCelularParam = new SqlParameter("@NumCelular", (object)newClient.NumeroCelular ?? DBNull.Value);
 
-            return Database.ExecuteSqlRaw("EXEC dbo.SPAddClient @TipoDoc, @NumeroDoc, @CiudadID, @Nombre, @FechaNacimiento, @NumCelular",
+            Database.ExecuteSqlRaw("EXEC dbo.SPAddClient @TipoDoc, @NumeroDoc, @CiudadID, @Nombre, @FechaNacimiento, @NumCelular",
                 tipoDocParam, numDocParam, ciudadIdParam, nombreParam, fechaNacimientoParam, numCelularParam
             );
         }
 
-        public int PUpdateClient(UpdClientModel updatedClient)
+        public void PUpdateClient(UpdClientModel updatedClient)
         {
             var numDocParam = new SqlParameter("@NumeroDoc", (object)updatedClient.NumeroDocumento ?? DBNull.Value);
             var ciudadIdParam = new SqlParameter("@CiudadID", (object)updatedClient.CiudadId ?? DBNull.Value);
             var numCelularParam = new SqlParameter("@NumCelular", (object)updatedClient.NumeroCelular ?? DBNull.Value);
 
-            return Database.ExecuteSqlRaw("EXEC dbo.SPUpdateClient @NumeroDoc, @CiudadID, @NumCelular",
+            Database.ExecuteSqlRaw("EXEC dbo.SPUpdateClient @NumeroDoc, @CiudadID, @NumCelular",
                 numDocParam, ciudadIdParam, numCelularParam
             );
         }
@@ -47,10 +47,11 @@ namespace ProyectoTP.DataLayer.Data
         public int PRegisterNewCall(AddRegCallModel newRegCall)
         {
             var clienteIdParam = new SqlParameter("@ClienteID", (object)newRegCall.ClienteId ?? DBNull.Value);
+            var tipoSolicitudParam = new SqlParameter("@TipoSolicitud", (object)newRegCall.TipoSolicitud ?? DBNull.Value);
             var razonParam = new SqlParameter("@Razon", (object)newRegCall.Razon ?? DBNull.Value);
 
-            return Database.ExecuteSqlRaw("EXEC dbo.SPRegisterCall @ClienteID, @Razon",
-                clienteIdParam, razonParam
+            return Database.ExecuteSqlRaw("EXEC dbo.SPRegisterCall @ClienteID, @TipoSolicitud, @Razon",
+                clienteIdParam, tipoSolicitudParam, razonParam
             );
         }
 

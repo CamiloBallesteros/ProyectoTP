@@ -9,6 +9,7 @@ namespace ProyectoTP.Models.SPModels.RegCall
     public class AddRegCallModel
     {
         public int ClienteId { get; set; }
+        public string TipoSolicitud { get; set; }
         public string? Razon { get; set; }
     }
 }

@@ -1,0 +1,23 @@
+﻿@model List<ProyectoTP.Models.ViewModels.LlamadasClienteView>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre Completo</th>
+            <th>Edad</th>
+            <th>Ciudad</th>
+            <th>Fecha Llamada</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var llamada in Model)
+        {
+            <tr class="client-row" data-id="@llamada.NumeroDocumento" data-tipodoc="@llamada.TipoDocumento">
+                <td>@Html.DisplayFor(modelItem => llamada.NombreCompleto)</td>
+                <td>@Html.DisplayFor(modelItem => llamada.Edad)</td>
+                <td>@Html.DisplayFor(modelItem => llamada.NombreCiudad)</td>
+                <td>@llamada.FechaLlamada.ToString("dd/MM/yyyy hh:mm tt")</td>
+            </tr>
+        }
+    </tbody>
+</table>

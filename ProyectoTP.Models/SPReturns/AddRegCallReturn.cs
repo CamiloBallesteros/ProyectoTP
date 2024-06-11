@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace ProyectoTP.Models.SPReturns
 {
-    public class AddClientReturn : GenericReturn
+    public class AddRegCallReturn : GenericReturn
     {
-        public int ClientAdded { get; set; } = 0;
+        public int IdInserted { get; set; }
+        public DateTime FechaDeLlamada { get; set; }
     }
 }

@@ -1,21 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ProyectoTP.Models.ViewModels
 {
-    public class ClientView
+    public class LlamadasClienteView
     {
-        public string TipoDocumento { get; set; }
         public int NumeroDocumento { get; set; }
+        public string TipoDocumento { get; set; }
         public string NombreCompleto { get; set; }
-        public string? NumeroCelular { get; set; }
-        public DateTime FechaNacimiento { get; set; } = new DateTime(1974, 1, 1);
+        public DateTime FechaNacimiento { get; set; }
         public int? Edad
         {
             get
@@ -28,5 +24,6 @@ namespace ProyectoTP.Models.ViewModels
             }
         }
         public string NombreCiudad { get; set; }
+        public DateTime FechaLlamada { get; set; }
     }
 }

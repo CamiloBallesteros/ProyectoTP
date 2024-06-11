@@ -9,6 +9,10 @@ namespace ProyectoTP.DataLayer.Tables
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [MaxLength(10, ErrorMessage = "El Tipo de Solicitud debe tener máximo 10 Caracteres")]
+        [Required]
+        public string TipoSolicitud { get; set; }
+
         [MaxLength(1000, ErrorMessage = "La Razón debe tener máximo 1000 Caracteres")]
         public string? Razon { get; set; }
 

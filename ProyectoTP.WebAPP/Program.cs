@@ -12,6 +12,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ProyectoTPConnection"))
 );
 builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddScoped<ICiudadService, CiudadService>();
+builder.Services.AddScoped<IRegLlamadaService, RegLlamadaService>();
 
 builder.Services.AddControllersWithViews();
 

@@ -1,0 +1,142 @@
+﻿@page
+@model ProyectoTP.WebAPP.Pages.Clientes.IndexModel
+@{
+}
+
+<div class="container-fluid mt-4">
+    <div class="row pt-2 mb-1">
+        <h4 id="title">@(Model.IsCliente ? "Actualizar datos del Cliente" : "Crear nuevo Cliente")</h4>
+    </div>
+    <form method="get" id="searchClient">
+        <input asp-for="NumDocumento" type="hidden"/>
+        <input asp-for="TipoDocumento"  type="hidden" />
+    </form>
+    <form method="post" asp-page-handler="@(Model.IsCliente ? "UpdClient" : "CreateClient")" id="saveClientData">
+        <input type="hidden" asp-for="IsCliente" />
+        <div class="row">
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    @if (Model.IsCliente)
+                    {
+                        <input asp-for="Cliente.NumeroDocumento" disabled />
+                    }else{
+                        <input asp-for="Cliente.NumeroDocumento" class="autosubmit" />
+                    }
+                    <label asp-for="Cliente.NumeroDocumento">Numero Documento:</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    @if (Model.IsCliente)
+                    {
+                        <input asp-for="Cliente.TipoDocumento" disabled/>
+                    }
+                    else
+                    {
+                        <select asp-for="Cliente.TipoDocumento" asp-items="Models.Dropdowns.TipoDocSelect" class="autosubmit">
+                            <option value="">Seleccione...</option>
+                        </select>
+                    }
+                    <label asp-for="Cliente.TipoDocumento">Tipo Documento:</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input asp-for="Cliente.NombreCompleto" class="disable_ifClient counter" data-length="100" />
+                    <label asp-for="Cliente.NombreCompleto">Nombre Completo:</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m4">
+                    <select asp-for="Cliente.NombreCiudad" asp-items="Model.ListaCiudades">
+                        <option value="">Seleccione...</option>
+                    </select>
+                    <label asp-for="Cliente.NombreCiudad">Ciudad:</label>
+                </div>
+                <div class="input-field col s12 m4">
+                    <input asp-for="Cliente.NumeroCelular" />
+                    <label asp-for="Cliente.NumeroCelular">Numero de celular:</label>
+                </div>
+                <div class="input-field col s12 m4">
+                    <input asp-for="Cliente.FechaNacimiento" class="disable_ifClient browser-default">
+                    <label for="Cliente_FechaNacimiento" class="datepicker-label">Fecha de nacimiento:</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s6 m3">
+                    <button class="btn waves-effect waves-light" id="btnSaveClient">
+                        Guardar
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+                <div class="input-field col s6 m3">
+                    <button class="btn waves-effect waves-light" type="button" onclick="limpiarCampos();">
+                        Limpiar Datos
+                        <i class="material-icons right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $(".datepicker").datepicker({
+                defaultDate: new Date(),
+                // setDefaultDate: new Date(2000,01,31),
+                maxDate: new Date(),
+                yearRange: [1928, new Date()]
+            });
+            $('select').formSelect();
+            $('input.counter').characterCounter();
+
+            $(".autosubmit").change(function () {
+                if ($("input#Cliente_NumeroDocumento").val().length > 3 && $("select#Cliente_TipoDocumento").val() != "") {
+                    $("input#NumDocumento").val( $("input#Cliente_NumeroDocumento").val() );
+                    $("input#TipoDocumento").val( $("select#Cliente_TipoDocumento").val() );
+                    $("form#searchClient").submit();
+                }
+            });
+
+            if ($("#IsCliente").val() == 'True') {
+                $("input.disable_ifClient").prop('disabled', true);
+            }
+
+            $("button#btnSaveClient").click(function (e) {
+                e.preventDefault();
+                var form = $('#saveClientData');
+                var formData = new FormData(form[0]);
+                ajaxInvoke = true;
+                $.ajax({
+                    url: form.attr('action'),
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    type: 'POST'
+                })
+                    .done(function (data) {
+                        console.log(data);
+                        if (data.ok == true) {
+                            alert(data.mensaje);
+                            window.location.href = '@Url.Page("/Index")';
+                        }
+                        ajaxInvoke = false;
+                    })
+                    .fail(function (err, textStatus) {
+                        if (err.status == "401") {
+                            window.location.href = '@Url.Page("/RegistroLlamadas/Registro")';
+                        }
+                        alert(err.status + ' ' + textStatus);
+                        ajaxInvoke = false;
+                        return false;
+                    });
+            });
+        });
+
+        function limpiarCampos(){
+            $('#saveClientData').attr('action', '/Clientes?handler=CreateClient');
+
+        }
+    </script>
+}

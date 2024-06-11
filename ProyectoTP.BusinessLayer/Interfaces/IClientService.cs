@@ -10,9 +10,9 @@ namespace ProyectoTP.BusinessLayer.Interfaces
 {
     public interface IClientService
     {
-        public AddClientReturn AddClient();
-        public UpdateClientReturn UpdateClient();
+        public AddClientReturn AddClient(ClientView newClient);
+        public UpdateClientReturn UpdateClient(int numDocumento, string? numCelular = null, string? nombreCiudad = null);
         public ClientView GetClientByTypeAndDoc(string tipoDoc, int numeroDocumento);
-        public List<ClientView> GetClientListFiltered(int numeroDocumento, string ciudad, DateTime? startDate = null, DateTime? endDate = null);
+        public List<LlamadasClienteView> GetClientListFiltered(int numeroDocumento, string ciudad, DateTime? startDate = null, DateTime? endDate = null);
     }
 }

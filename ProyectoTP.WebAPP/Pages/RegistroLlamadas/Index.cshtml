@@ -1,0 +1,83 @@
+﻿@page
+@model ProyectoTP.WebAPP.Pages.RegistroLlamadas.IndexModel
+@{
+}
+
+<div class="container-fluid mt-4">
+    <div class="row pt-2 mb-1">
+        <h4 class="col col-sm-12 m6">Registro Llamadas</h4>
+        <a class="col s12 m2 btn waves-effect waves-light" asp-area="" asp-page="./Registro">
+            Registrar Nueva Llamada
+            <i class="material-icons right">add_circle_outline</i>
+        </a>
+    </div>
+    <form method="get" id="filteredSearch">
+        <div class="row">
+            <div class="row col s12 m5">
+                <div class="input-field col s6 m3">
+                    <input asp-for="NumDocumento" class="autosubmit" value="" />
+                    <label asp-for="NumDocumento">Numero Documento:</label>
+                </div>
+                <div class="input-field col s6 m3">
+                    <select asp-for="NombreCiudad" asp-items="Model.ListaCiudades" class="autosubmit">
+                        <option value="">Seleccione...</option>
+                    </select>
+                    <label asp-for="NombreCiudad">Ciudad:</label>
+                </div>
+            </div>
+            <div class="row col s11 m6">
+                <div class="input-field col s6 m3">
+                    <input asp-for="StartDate" class="browser-default">
+                    <label for="StartDate" class="datepicker-label">Fecha Inicio:</label>
+                </div>
+                <div class="input-field col s6 m3">
+                    <input asp-for="EndDate" class="browser-default">
+                    <label for="StartDate" class="datepicker-label">Fecha Fin</label>
+                </div>
+            </div>
+            <div class="input-field col s1">
+                <button class="btn waves-effect waves-light" type="submit">
+                    <i class="material-icons right m-0">search</i>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="tableRegistroLlamadas" class="container-fluid mt-3">
+    <partial name="_tableRegistrosLlamada" model="Model.ListaLlamadas" />
+</div>
+
+@if (Model.ListaLlamadas.Count > 0)
+{
+    <div class="row pt-2">
+        <div class="row p-3" style="border: 1px solid var(--main-bg-plain-color);">
+            <div class="col s12 m4">
+                <span>Promedio Edad: <b>@Model.PromedioEdad</b></span>
+            </div>
+            <div class="col s12 m4">
+                <span>Clientes Menores a (20): <b>@Model.ClientesMenor_20</b></span>
+            </div>
+            <div class="col s12 m4">
+                <span>Clientes Mayores a (50): <b>@Model.ClientesMayor_50</b></span>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        $(function () {
+            $('select').formSelect();
+
+            $(".autosubmit").change(function () {
+                $("form#filteredSearch").submit();
+            });
+
+            $("tr.client-row").css("cursor", "pointer");
+            $("tr.client-row").click(function () {
+                window.location.href = '@Url.Page("/Clientes/Index")?NumDocumento=' + $(this).data("id") + '&TipoDocumento=' + $(this).data("tipodoc");
+            });
+        });
+    </script>
+}

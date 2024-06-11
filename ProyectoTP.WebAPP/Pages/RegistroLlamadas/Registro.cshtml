@@ -1,0 +1,204 @@
+﻿@page
+@using static ProyectoTP.Models.Dropdowns;
+@model ProyectoTP.WebAPP.Pages.RegistroLlamadas.RegistroModel
+@{
+}
+
+<div class="container-fluid mt-4">
+    <input type="hidden" asp-for="IsCliente" />
+    <div class="row pt-2 mb-1">
+        <h4>Registrar Nueva Llamada</h4>
+    </div>
+    <form method="get" id="searchClient">
+        <div class="row">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="input-field col s12 m6">
+                    <select asp-for="TipoDocumento" asp-items="Models.Dropdowns.TipoDocSelect">
+                        <option value="" selected>Seleccione...</option>
+                    </select>
+                    <label asp-for="TipoDocumento">Tipo Documento:</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <input asp-for="NumDocumento" placeholder="Buscar" value="" />
+                    <label asp-for="NumDocumento">Numero Documento:</label>
+                </div>
+                <button class="btn waves-effect waves-light">
+                    <i class="material-icons right m-0">search</i>
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <form method="post" asp-page-handler="@(Model.IsCliente ? "UpdClient" : "CreateClient")" id="saveClientData">
+        <div class="row">
+            <h4>Datos del cliente</h4>
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    @if (Model.IsCliente)
+                    {
+                        <input asp-for="Cliente.NumeroDocumento" type="hidden" />
+                    }
+                    <input asp-for="Cliente.NumeroDocumento" class="disable_ifClient" />
+                    <label asp-for="Cliente.NumeroDocumento">Numero Documento:</label>
+                </div>
+                <div class="input-field col s12 m6 select_disable_ifClient">
+                    <select asp-for="Cliente.TipoDocumento" asp-items="Models.Dropdowns.TipoDocSelect">
+                        <option value="">Seleccione...</option>
+                    </select>
+                    <label asp-for="Cliente.TipoDocumento">Tipo Documento:</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input asp-for="Cliente.NombreCompleto" class="disable_ifClient counter" data-length="100" />
+                    <label asp-for="Cliente.NombreCompleto">Nombre Completo:</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m4">
+                    <select asp-for="Cliente.NombreCiudad" asp-items="Model.ListaCiudades">
+                        <option value="">Seleccione...</option>
+                    </select>
+                    <label asp-for="Cliente.NombreCiudad">Ciudad:</label>
+                </div>
+                <div class="input-field col s12 m4">
+                    <input asp-for="Cliente.NumeroCelular" />
+                    <label asp-for="Cliente.NumeroCelular">Numero de celular:</label>
+                </div>
+                <div class="input-field col s12 m4">
+                    <input asp-for="Cliente.FechaNacimiento" class="disable_ifClient browser-default">
+                    <label for="Cliente_FechaNacimiento" class="datepicker-label">Fecha de nacimiento:</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s6 m3">
+                    <button class="btn waves-effect waves-light" id="btnSaveClient">
+                        Guardar / Continuar
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+                <div class="input-field col s6 m3">
+                    <button class="btn waves-effect waves-light" onclick="limpiarCampos();">
+                        Limpiar Datos
+                        <i class="material-icons right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <form method="post" asp-page-handler="RegistrarLlamada" id="saveRegCall">
+        <input type="hidden" asp-for="RegCall.ClienteId" />
+        <div class="row">
+            <h4>Datos de la llamada</h4>
+            <div class="row">
+                <div class="input-field col s12">
+                    <select asp-for="RegCall.TipoSolicitud" asp-items="Models.Dropdowns.TipoSolicitud">
+                        <option value="">Seleccione...</option>
+                    </select>
+                    <label for="RegCall_TipoSolicitud">Tipo Solicitud</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <textarea asp-for="RegCall.Razon" class="materialize-textarea counter" data-length="1000"></textarea>
+                    <label for="textarea1">Razón</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s6 m3">
+                    <button class="btn waves-effect waves-light" id="btnSaveCall">
+                        Guardar
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $(".datepicker").datepicker({
+                defaultDate: new Date(),
+                // setDefaultDate: new Date(2000,01,31),
+                maxDate: new Date(),
+                yearRange: [1928, new Date()]
+            });
+            $('select').formSelect();
+            $('input.counter, textarea.counter').characterCounter();
+
+            if ($("#IsCliente").val() == 'True') {
+                $("input#RegCall_ClienteId").val($("input#Cliente_NumeroDocumento").val());
+                $("input.disable_ifClient").prop('disabled', true);
+                $(".select_disable_ifClient .select-dropdown").css('color', 'rgba(0, 0, 0, 0.42)');
+                $(".select_disable_ifClient .select-dropdown").css('border-bottom', '1px dotted rgba(0, 0, 0, 0.42)');
+                $(".select_disable_ifClient .select-dropdown").css('pointer-events', 'none')
+                $(".select_disable_ifClient ul li").css('display', 'none');
+            }
+
+            $("button#btnSaveClient").click(function (e) {
+                e.preventDefault();
+                var form = $('#saveClientData');
+                var formData = new FormData(form[0]);
+                ajaxInvoke = true;
+                $.ajax({
+                    url: form.attr('action'),
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    type: 'POST'
+                })
+                    .done(function (data) {
+                        console.log(data);
+                        if (data.ok == true) {
+                            $("input#RegCall_ClienteId").val(data.numDocChanged);
+                            alert(data.mensaje);
+                        }
+                        ajaxInvoke = false;
+                    })
+                    .fail(function (err, textStatus) {
+                        if (err.status == "401") {
+                            window.location.href = '@Url.Page("/RegistroLlamadas/Registro")';
+                        }
+                        alert(err.status + ' ' + textStatus);
+                        ajaxInvoke = false;
+                        return false;
+                    });
+            });
+
+            $("button#btnSaveCall").click(function (e) {
+                e.preventDefault();
+                var form = $('#saveRegCall');
+                var formData = new FormData(form[0]);
+                ajaxInvoke = true;
+                $.ajax({
+                    url: form.attr('action'),
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    type: 'POST'
+                })
+                    .done(function (data) {
+                        console.log(data);
+                        if (data.ok == true) {
+                            alert(data.mensaje);
+                            window.location.href = '@Url.Page("/RegistroLlamadas/Index")';
+                        }
+                        ajaxInvoke = false;
+                    })
+                    .fail(function (err, textStatus) {
+                        if (err.status == "401") {
+                            window.location.href = '@Url.Page("/RegistroLlamadas/Registro")';
+                        }
+                        alert(err.status + ' ' + textStatus);
+                        ajaxInvoke = false;
+                        return false;
+                    });
+            });
+        });
+    </script>
+}
