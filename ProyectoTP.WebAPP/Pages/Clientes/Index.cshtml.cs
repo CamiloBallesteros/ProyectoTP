@@ -21,7 +21,7 @@ namespace ProyectoTP.WebAPP.Pages.Clientes
             _ciudadService = ciudadService;
         }
         [BindProperty]
-        public ClientView Cliente { get; set; } = null!;
+        public ClientView Cliente { get; set; }
         [FromQuery]
         public int NumDocumento { get; set; } = 0;
         [FromQuery]
@@ -37,6 +37,11 @@ namespace ProyectoTP.WebAPP.Pages.Clientes
                 Cliente = _clientService.GetClientByTypeAndDoc(TipoDocumento, NumDocumento);
                 if (Cliente.NumeroDocumento > 0)
                     IsCliente = true;
+                else
+                {
+                    Cliente.NumeroDocumento = NumDocumento;
+                    Cliente.TipoDocumento = TipoDocumento;
+                }
             }
             return Page();
         }

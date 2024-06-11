@@ -18,16 +18,18 @@
                 <div class="input-field col s12 m6">
                     @if (Model.IsCliente)
                     {
+                        <input asp-for="Cliente.NumeroDocumento" type="hidden" />
                         <input asp-for="Cliente.NumeroDocumento" disabled />
                     }else{
-                        <input asp-for="Cliente.NumeroDocumento" class="autosubmit" />
+                        <input asp-for="Cliente.NumeroDocumento" class="autosubmit"/>
                     }
                     <label asp-for="Cliente.NumeroDocumento">Numero Documento:</label>
                 </div>
                 <div class="input-field col s12 m6">
                     @if (Model.IsCliente)
                     {
-                        <input asp-for="Cliente.TipoDocumento" disabled/>
+                        <input asp-for="Cliente.TipoDocumento" type="hidden"/>
+                        <input asp-for="Cliente.TipoDocumento" disabled />
                     }
                     else
                     {
@@ -56,8 +58,8 @@
                     <label asp-for="Cliente.NumeroCelular">Numero de celular:</label>
                 </div>
                 <div class="input-field col s12 m4">
-                    <input asp-for="Cliente.FechaNacimiento" class="disable_ifClient browser-default">
-                    <label for="Cliente_FechaNacimiento" class="datepicker-label">Fecha de nacimiento:</label>
+                    <input asp-for="Cliente.FechaNacimientoString" class="disable_ifClient datepicker">
+                    <label for="Cliente_FechaNacimientoString" class="datepicker-label">Fecha de nacimiento:</label>
                 </div>
             </div>
 
@@ -77,10 +79,12 @@
     <script>
         $(function () {
             $(".datepicker").datepicker({
-                defaultDate: new Date(),
-                // setDefaultDate: new Date(2000,01,31),
-                maxDate: new Date(),
-                yearRange: [1928, new Date()]
+                defaultDate: new Date(2000,01, 31),
+                minDate: new Date(1950, 1, 1),
+                maxDate: new Date(2014, 12, 31),
+                yearRange: [1950, 2014],
+                showClearBtn: true,
+                format: "dd/mm/yyyy"
             });
             $('select').formSelect();
             $('input.counter').characterCounter();
